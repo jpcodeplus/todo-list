@@ -2,9 +2,7 @@ let tasks = [];
 
 function loadTasks() {
   const savedTasks = localStorage.getItem("tasks");
-  if (savedTasks) {
-    tasks = JSON.parse(savedTasks);
-  }
+  tasks = savedTasks ? JSON.parse(savedTasks) : [];
   renderTasks();
 }
 
@@ -48,20 +46,22 @@ function renderTasks() {
   const allTaskCount = document.getElementById("allTaskCount");
   const openTaskCount = document.getElementById("openTaskCount");
   const completedTaskCount = document.getElementById("completedTaskCount");
+  
+  // Clear previous items
   allTaskList.innerHTML = "";
   openTaskList.innerHTML = "";
   completedTaskList.innerHTML = "";
-
+  
   let openCount = 0;
   let completedCount = 0;
 
   tasks.forEach((task, index) => {
     const listItem = document.createElement("li");
     listItem.innerHTML = `
-        <span class="${task.completed ? 'completed' : 'active'}">${task.text}</span>
-        <button class="${task.completed ? 'btn_task-done' : 'btn_task-open'}" onclick="toggleCompleted(${index})"></button>
-        <button class="btn_delete" onclick="deleteTask(${index})">Delete</button>
-        `;
+      <span class="${task.completed ? 'completed' : 'active'}">${task.text}</span>
+      <button class="${task.completed ? 'btn_task-done' : 'btn_task-open'}" onclick="toggleCompleted(${index})"></button>
+      <button class="btn_delete" onclick="deleteTask(${index})">Delete</button>
+    `;
 
     if (task.completed) {
       completedTaskList.appendChild(listItem);
@@ -76,16 +76,25 @@ function renderTasks() {
   allTaskCount.textContent = tasks.length;
   openTaskCount.textContent = openCount;
   completedTaskCount.textContent = completedCount;
+  
+  // Display "No Todos" message for each category if there are no tasks
+  if (tasks.length === 0) {
+    allTaskList.innerHTML = '<li class="empty-message">Keine Aufgaben</li>';
+  }
+  if (openCount === 0) {
+    openTaskList.innerHTML = '<li class="empty-message">Yuhu, keine offenen Aufgaben</li>';
+  }
+  if (completedCount === 0) {
+    completedTaskList.innerHTML = '<li class="empty-message">Keine beendeten Aufgaben</li>';
+  }
 }
-
-
 
 function setActiveTaskType(event) {
   const taskTypes = document.querySelectorAll(".task-types h3");
   const taskLists = document.querySelectorAll('.task-lists ul');
 
   taskTypes.forEach(item => item.classList.remove("active"));
-  taskLists.forEach(item=>{item.classList.remove("show-tasks");})
+  taskLists.forEach(item => { item.classList.remove("show-tasks"); })
 
   event.target.classList.add("active");
   const ID = document.querySelector(`#${event.target.dataset.open}`);
@@ -94,7 +103,5 @@ function setActiveTaskType(event) {
 
 const taskTypes = document.querySelectorAll(".task-types h3");
 taskTypes.forEach((taskType) => taskType.addEventListener("click", setActiveTaskType));
-
-
 
 loadTasks();
