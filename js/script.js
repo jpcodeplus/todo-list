@@ -121,6 +121,7 @@ document.getElementById("taskInput").addEventListener("keyup", event => {
 document.querySelector(".add-new-task").addEventListener("click", event => {
   const input = document.getElementById("taskInput");
   taskManager.addTask(input.value.trim());
+  alert(input.value);
   input.value = "";
 });
 
