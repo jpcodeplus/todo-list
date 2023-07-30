@@ -19,7 +19,6 @@ class TaskManager {
   saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(this.tasks));
     this.renderTasks();
-    console.log(`Es sind ${size} MB belegt`)
   }
 
   addTask(taskText) {
@@ -119,8 +118,18 @@ document.getElementById("taskInput").addEventListener("keyup", event => {
   }
 });
 
+document.querySelector(".add-new-task").addEventListener("click", event => {
+  const input = document.getElementById("taskInput");
+  taskManager.addTask(input.value.trim());
+  input.value = "";
+});
+
 document.getElementById("searchInput").addEventListener("input", event => {
   taskManager.searchTasks(event.target.value.trim());
 });
+
+
+
+
 
 taskManager.loadTasks();
