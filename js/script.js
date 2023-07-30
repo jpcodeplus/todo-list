@@ -10,17 +10,6 @@ class TaskManager {
     this.sortableLists = [this.allTaskList, this.openTaskList, this.completedTaskList];
   }
 
-  getLocalStorageSizeInMB() {
-    let total = 0;
-    for(let x in localStorage) {
-        let amount = (localStorage[x].length * 2) / 1024 / 1024;
-        if (!isNaN(amount) && localStorage.hasOwnProperty(x)) {
-            total += amount;
-        }
-    }
-    return total.toFixed(2);
-  }
-
   loadTasks() {
     const savedTasks = localStorage.getItem("tasks");
     this.tasks = savedTasks ? JSON.parse(savedTasks) : [];
@@ -30,8 +19,6 @@ class TaskManager {
   saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(this.tasks));
     this.renderTasks();
-
-    const size = this.getLocalStorageSizeInMB();
     console.log(`Es sind ${size} MB belegt`)
   }
 
