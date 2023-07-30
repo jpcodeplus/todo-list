@@ -20,10 +20,14 @@ body {
   max-width: 30rem;
   margin: 50px auto;
   background-color: #fff;
-  padding: 20px;
+  padding: 1.5rem;
   border-radius: 5px;
-  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px -3px rgba(0,0,0,0); 
-  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px -3px rgba(0,0,0,0);
+
+  --shadow: rgba(0, 0, 0,.6);
+  --myShadow: 0 .75rem .825rem -.5rem var(--shadow);
+
+  -webkit-box-shadow: var(--myShadow); 
+  box-shadow: var(--myShadow); ;
 }
 
 h1 {
@@ -138,7 +142,6 @@ li:last-child {
 
 .add-new-task,
 .add-new-task:hover {
-
   position: absolute;
   height: calc(100% - 1rem);
   aspect-ratio: 1/1;
@@ -243,33 +246,32 @@ footer .version{
   gap: 1rem;
 }
 
-a.btn_support{
-  background-color: #fcfcfc;
-  display: flex;
+a.btn_support,
+a.btn_whatsapp{
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  padding: 0 .5rem;
-  border: 1px dashed #7d7d7d;
-  border-radius: .25rem;
-  opacity: .7;
   transition: all .2s ease-in-out;
+  gap:.6rem;
+}
+
+a.btn_support{
+  display: flex;
+  opacity: .7;
   transform: scale(.9);
-  gap:.5rem;
 }
 
 a.btn_whatsapp{
   background-color: #138C7E;
   border-bottom: 3px solid #0f786c;
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
   padding: 0 .6rem;
   border-radius: .25rem;
-  transition: all .2s ease-in-out;
   transform: scale(.8);
-  gap: .75rem;
+  --shadow: rgba(0, 0, 0,.3);
+  --myShadow: 0px 10px 13px -7px var(--shadow), 5px 5px 15px -3px var(--shadow);
+  -webkit-box-shadow: var(--myShadow); 
+  box-shadow: var(--myShadow); ;
 }
 
 a.btn_whatsapp .support-text{
