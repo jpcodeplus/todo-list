@@ -1,6 +1,24 @@
 class TaskManager {
   constructor() {
     this.tasks = [];
+    this.allTaskList = document.getElementById("allTaskList");
+    this.openTaskList = document.getElementById("openTaskList");
+    this.completedTaskList = document.getElementById("completedTaskList");
+    this.allTaskCount = document.getElementById("allTaskCount");
+    this.openTaskCount = document.getElementById("openTaskCount");
+    this.completedTaskCount = document.getElementById("completedTaskCount");
+    this.sortableLists = [this.allTaskList, this.openTaskList, this.completedTaskList];
+  }
+
+  getLocalStorageSizeInMB() {
+    let total = 0;
+    for(let x in localStorage) {
+        let amount = (localStorage[x].length * 2) / 1024 / 1024;
+        if (!isNaN(amount) && localStorage.hasOwnProperty(x)) {
+            total += amount;
+        }
+    }
+    return total.toFixed(2);
   }
 
   loadTasks() {
@@ -11,6 +29,10 @@ class TaskManager {
 
   saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(this.tasks));
+    this.renderTasks();
+
+    const size = this.getLocalStorageSizeInMB();
+    console.log(`Es sind ${size} MB belegt`)
   }
 
   addTask(taskText) {
@@ -23,19 +45,16 @@ class TaskManager {
 
     this.tasks.push(newTask);
     this.saveTasks();
-    this.renderTasks();
   }
 
   deleteTask(index) {
     this.tasks.splice(index, 1);
     this.saveTasks();
-    this.renderTasks();
   }
 
   toggleCompleted(index) {
     this.tasks[index].completed = !this.tasks[index].completed;
     this.saveTasks();
-    this.renderTasks();
   }
 
   searchTasks(query) {
@@ -43,16 +62,7 @@ class TaskManager {
     this.renderTasks(filteredTasks);
   }
 
-  renderTasks(tasksToRender) {
-    const tasks = tasksToRender || this.tasks;
-
-    const allTaskList = document.getElementById("allTaskList");
-    const openTaskList = document.getElementById("openTaskList");
-    const completedTaskList = document.getElementById("completedTaskList");
-    const allTaskCount = document.getElementById("allTaskCount");
-    const openTaskCount = document.getElementById("openTaskCount");
-    const completedTaskCount = document.getElementById("completedTaskCount");
-    
+  renderTasks(tasksToRender = this.tasks) {
     let openCount = 0;
     let completedCount = 0;
 
@@ -60,12 +70,12 @@ class TaskManager {
     let openTasksHTML = "";
     let completedTasksHTML = "";
 
-    tasks.forEach((task, index) => {
+    tasksToRender.forEach((task, index) => {
       const taskHTML = `
         <li>
           <span class="${task.completed ? 'completed' : 'active'}">${task.text}</span>
-          <button class="${task.completed ? 'btn_task-done' : 'btn_task-open'}" onclick="taskManager.toggleCompleted(${index})"></button>
-          <button class="btn_delete" onclick="taskManager.deleteTask(${index})">Delete</button>
+          <button class="${task.completed ? 'btn_task btn_task-done' : 'btn_task btn_task-open'}" onclick="taskManager.toggleCompleted(${index})"></button>
+          <button class="btn_task btn_delete" onclick="taskManager.deleteTask(${index})">Delete</button>
         </li>
       `;
 
@@ -79,17 +89,30 @@ class TaskManager {
       }
     });
 
-    allTaskList.innerHTML = allTasksHTML || '<li class="empty-message">Keine Aufgaben</li>';
-    openTaskList.innerHTML = openTasksHTML || '<li class="empty-message">Yuhu, keine offenen Aufgaben</li>';
-    completedTaskList.innerHTML = completedTasksHTML || '<li class="empty-message">Keine beendeten Aufgaben</li>';
+    this.allTaskList.innerHTML = allTasksHTML || '<li class="empty-message">Keine Aufgaben</li>';
+    this.openTaskList.innerHTML = openTasksHTML || '<li class="empty-message">Yuhu, keine offenen Aufgaben</li>';
+    this.completedTaskList.innerHTML = completedTasksHTML || '<li class="empty-message">Keine beendeten Aufgaben</li>';
 
-    allTaskCount.textContent = tasks.length;
-    openTaskCount.textContent = openCount;
-    completedTaskCount.textContent = completedCount;
+    this.allTaskCount.textContent = tasksToRender.length;
+    this.openTaskCount.textContent = openCount;
+    this.completedTaskCount.textContent = completedCount;
+  }
+
+  initSortable() {
+    this.sortableLists.forEach(list => {
+      new Sortable(list, {
+        onEnd: (evt) => {
+          const movedTask = this.tasks.splice(evt.oldIndex, 1)[0];
+          this.tasks.splice(evt.newIndex, 0, movedTask);
+          this.saveTasks();
+        },
+      });
+    });
   }
 }
 
 const taskManager = new TaskManager();
+taskManager.initSortable();
 
 document.querySelector(".task-types").addEventListener("click", event => {
   if (event.target.tagName === 'H3') {

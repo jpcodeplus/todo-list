@@ -1,12 +1,9 @@
 @import url(normalize.css);
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url(font.css);
 
+/* GENERELL */
 * {
   box-sizing: border-box;
-}
-
-.handwritten{
-  font-family: 'Caveat', cursive;
 }
 
 body {
@@ -14,6 +11,41 @@ body {
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
+}
+
+/* FONT */
+.handwritten{
+  font-family: 'Caveat', cursive;
+}
+
+h1 {
+  display: inline-flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   gap: 1rem;
+   margin-left: -1.5rem;
+   font-size: 1.5rem;
+   font-weight: 300;
+ }
+ 
+ h1 .icon{
+  background-image: url(./../assets/icon.svg);
+  background-size: contain;
+  width: 3.5rem;
+  aspect-ratio: 1/1;
+}
+
+/* LAYOUT */
+
+main.app-main{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main.app-main section{
+  flex-grow: 1;
 }
 
 .container {
@@ -30,33 +62,37 @@ body {
   box-shadow: var(--myShadow); ;
 }
 
-h1 {
- display: inline-flex;
+footer{
+  background-color: rgba(255,255,255,.5);
+  font-size: 85%;
+  display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  gap: 1rem;
-  margin-left: -1.5rem;
-  font-size: 1.5rem;
-  font-weight: 300;
+  gap: .5rem;
+  padding: .5rem 0;
+  font-weight: 100;
 }
 
-h1 .icon{
-  background-image: url(./../assets/icon.svg);
-  background-size: contain;
-  width: 3.5rem;
-  aspect-ratio: 1/1;
+footer .copyright{
+  color: #a1a1a1;
+}
+
+footer .version{
+  background-color: #ffd84d;
+  padding: .25rem .5rem;
+  border-radius: .25rem;
+  transform: scale(.8);
 }
 
 
+/* FORM */
 .input-form {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   position: relative;
   height: auto;
 }
-
-
 
 input[type="text"] {
   width: 100%;
@@ -81,6 +117,9 @@ button:hover {
   background-color: #45a049;
 }
 
+
+
+/* TASK LIST */
 ul {
   list-style: none;
   padding: 0;
@@ -109,36 +148,19 @@ li:last-child {
   color: #666;
 }
 
-
-.btn_delete {
-  background-image: url('./../assets/remove.svg');
+/* TASK LIST BUTTONS */
+.btn_task{
   background-size: cover;
   text-indent: -9999px;
   width: 2rem;
   aspect-ratio: 1/1;
 }
 
+.btn_delete { background-image: url('./../assets/remove.svg');}
+.btn_task-open {background-image: url('./../assets/check.svg');}
+.btn_task-done {background-image: url('./../assets/done.svg');}
 
-.btn_task-open {
-  background-image: url('./../assets/check.svg');
-  background-size: cover;
-  text-indent: -9999px;
-  width: 2rem;
-  aspect-ratio: 1/1;
-}
-
-.btn_task-done {
-  background-image: url('./../assets/done.svg');
-  background-size: cover;
-  text-indent: -9999px;
-  width: 2rem;
-  aspect-ratio: 1/1;
-}
-
-.btn_task-done:hover {
-  fill: red;
-}
-
+/* ---- STOPP ---- */
 
 .add-new-task,
 .add-new-task:hover {
@@ -201,38 +223,7 @@ li:last-child {
   border-radius: .25rem;
 }
 
-main.app-main{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
 
-main.app-main section{
-  flex-grow: 1;
-}
-
-footer{
-  background-color: rgba(255,255,255,.5);
-  font-size: 85%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
-  padding: .5rem 0;
-  font-weight: 100;
-}
-
-footer .copyright{
-  color: #a1a1a1;
-}
-
-footer .version{
-  background-color: #ffd84d;
-  padding: .25rem .5rem;
-  border-radius: .25rem;
-  transform: scale(.8);
-}
 
 
 .support{
@@ -333,16 +324,6 @@ hr{
   line-height: 1.4;
 }
 
-
-@keyframes shaking {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  50% { transform: rotate(0eg); }
-  75% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-
 #allTaskList,
 #openTaskList,
 #completedTaskList{
@@ -352,7 +333,6 @@ hr{
 .show-tasks{
   display: block !important;
 }
-
 
 .empty-message{
   display: flex;
@@ -364,4 +344,64 @@ hr{
   font-family: 'Caveat', cursive;
   text-align: center;
   color: #6e6e6e;
+}
+
+
+
+.sortable-drag {
+  opacity: 1 !important;
+  box-shadow: 0 0 1rem #000;
+  border: 1px solid #000;
+}
+.sortable-over {
+  background: green !important;
+}
+
+/* Style for the chosen item during the drag */
+.sortable-chosen {
+  opacity: 1;
+  background: #fff;
+}
+
+/* Style for the ghost item during the drag */
+.sortable-ghost {
+  opacity: 1;
+  text-indent: -99999px;
+  background-color: #eee;
+  border: none; 
+}
+
+.sortable-ghost > *{
+  opacity: .1;
+}
+
+
+
+/* ------ */
+#preloader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: #fff;
+}
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px; /* Half the width/height */
+  border: 6px solid #eee;
+  border-top: 6px solid #666;
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
