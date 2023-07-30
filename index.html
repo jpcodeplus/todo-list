@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgaben Liste</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="./assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="./assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <main class="app-main">
+        <section>
+            <div class="container">
+                <h1>
+                    <div class="icon"></div> Aufgaben Liste
+                </h1>
+                <form action="#" class="input-form" onsubmit="event.preventDefault();">
+                    <input type="text" id="taskInput" placeholder="Was gibt es zu tun...">
+                    <button type="submit" class="add-new-task">+</button>
+                </form>
+
+                <h5>Suche</h5>
+                <form action="#" class="input-form">
+                    <input type="text" id="searchInput" placeholder="Wonach suchst du...">
+                </form>
+
+                <div>
+                    <nav class="task-types">
+                        <h3 class="active" data-open="allTaskList">Alle <span id="allTaskCount">0</span></h3>
+                        <h3 data-open="openTaskList">Offene <span id="openTaskCount">0</span></h3>
+                        <h3 data-open="completedTaskList">Beendete <span id="completedTaskCount">0</span></h3>
+                    </nav>
+                    <section class="task-lists">
+                        <ul class="show-tasks" id="allTaskList"></ul>
+                        <ul id="openTaskList"></ul>
+                        <ul id="completedTaskList"></ul>
+                    </section>
+                </div>
+            </div>
+            <div class="support">
+                <a class="btn_whatsapp" href="https://wa.me/message/JJOPBXW76SLQG1" target="_blank">
+                    <span class="support-text handwritten">Kontakt via <b>Whats</b>app</span>
+                    <span class="whatsapp"></span>
+                </a>
+                <span class="whatsapp-info">Bei Fragen, Anregungen oder Bugs einfach Kontakt per WhatsApp
+                    aufnehmen</span>
+                <hr>
+                <a class="btn_support" href="https://www.paypal.com/paypalme/jpbka/1" target="_blank">
+                    <span class="happy"></span>
+                    <span class="support-text handwritten">Projekt mit <b>1€</b> unterstützen</span>
+                    <span class="paypal"></span>
+                </a>
+            </div>
+        </section>
+        <footer>
+            <div class="copyright">Developed and designed by JP @ Code Plus Media</div>
+            <div class="version">Version: 1.0.0</div>
+        </footer>
+    </main>
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <script defer src="./js/sortable.js"></script>
+    <script defer src="./js/script.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
