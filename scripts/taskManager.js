@@ -1,5 +1,5 @@
 class TaskManager {
-  constructor() {
+  constructor(helpers) {
     this.tasks = [];
     this.allTaskList = document.getElementById("allTaskList");
     this.openTaskList = document.getElementById("openTaskList");
@@ -8,6 +8,19 @@ class TaskManager {
     this.openTaskCount = document.getElementById("openTaskCount");
     this.completedTaskCount = document.getElementById("completedTaskCount");
     this.sortableLists = [this.allTaskList, this.openTaskList, this.completedTaskList];
+    this.helpers = helpers;
+  }
+
+
+
+  validateInput(input) {
+    let validated = true;
+    let errorText = false;
+    input.trim();
+    if (input.length <= 3) errorText = 'Eingabe zu kurz\n';
+    if (errorText) validated = false;
+    errorText && this.helpers.createToast(errorText,'error');
+    return validated
   }
 
   loadTasks() {
@@ -22,9 +35,9 @@ class TaskManager {
   }
 
   addTask(taskText) {
-    if (taskText === "") {
-      alert('Ungültige Eingabe!')
-      return;}
+
+    // Eingabe wird validiert
+    if (!this.validateInput(taskText)) return;
 
     const newTask = {
       text: taskText,
@@ -61,6 +74,7 @@ class TaskManager {
     tasksToRender.forEach((task, index) => {
       const taskHTML = `
         <li>
+          <div class="drag-handle"></div>
           <span class="${task.completed ? 'completed' : 'active'}">${task.text}</span>
           <button class="${task.completed ? 'btn_task btn_task-done' : 'btn_task btn_task-open'}" onclick="taskManager.toggleCompleted(${index})"></button>
           <button class="btn_task btn_delete" onclick="taskManager.deleteTask(${index})">Delete</button>
@@ -89,6 +103,8 @@ class TaskManager {
   initSortable() {
     this.sortableLists.forEach(list => {
       new Sortable(list, {
+        animation: 150,
+        handle: '.drag-handle',
         onEnd: (evt) => {
           const movedTask = this.tasks.splice(evt.oldIndex, 1)[0];
           this.tasks.splice(evt.newIndex, 0, movedTask);
@@ -98,40 +114,3 @@ class TaskManager {
     });
   }
 }
-
-const taskManager = new TaskManager();
-taskManager.initSortable();
-
-document.querySelector(".task-types").addEventListener("click", event => {
-  if (event.target.tagName === 'H3') {
-    document.querySelectorAll(".task-types h3").forEach(item => item.classList.remove("active"));
-    document.querySelectorAll('.task-lists ul').forEach(item => { item.classList.remove("show-tasks"); })
-
-    event.target.classList.add("active");
-    const ID = document.querySelector(`#${event.target.dataset.open}`);
-    ID.classList.add('show-tasks');
-  }
-});
-
-document.getElementById("taskInput").addEventListener("keyup", event => {
-  if (event.key === "Enter") {
-    taskManager.addTask(event.target.value.trim());
-    event.target.value = "";
-  }
-});
-
-document.querySelector(".add-new-task").addEventListener("click", event => {
-  const input = document.getElementById("taskInput");
-  taskManager.addTask(input.value.trim());
-  input.value = "";
-});
-
-document.getElementById("searchInput").addEventListener("input", event => {
-  taskManager.searchTasks(event.target.value.trim());
-});
-
-
-
-
-
-taskManager.loadTasks();

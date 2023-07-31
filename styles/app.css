@@ -30,7 +30,7 @@ h1 {
  }
  
  h1 .icon{
-  background-image: url(./../assets/icon.svg);
+  background-image: url(./../assets/icons/icon.svg);
   background-size: contain;
   width: 3.5rem;
   aspect-ratio: 1/1;
@@ -92,16 +92,16 @@ footer .version{
   background-color: rgba(0, 0, 0, 0.1);
   position: relative;
   height: auto;
+  box-shadow: inset .1rem .1rem .25rem rgba(0, 0, 0, 0.25);
+  border-radius: .25rem;
 }
 
 input[type="text"] {
-  width: 100%;
+  width: calc(100% - 2rem);
   padding: .75rem;
   outline: none;
   border: none;
-  background: #eee;
-  box-shadow: inset .1rem .1rem .25rem rgba(0, 0, 0, 0.25);
-  border-radius: .25rem;
+  background: transparent;
 }
 
 button {
@@ -153,12 +153,15 @@ li:last-child {
   background-size: cover;
   text-indent: -9999px;
   width: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
   aspect-ratio: 1/1;
+
 }
 
-.btn_delete { background-image: url('./../assets/remove.svg');}
-.btn_task-open {background-image: url('./../assets/check.svg');}
-.btn_task-done {background-image: url('./../assets/done.svg');}
+.btn_delete { background-image: url('./../assets/icons/remove.svg');}
+.btn_task-open {background-image: url('./../assets/icons/check.svg');}
+.btn_task-done {background-image: url('./../assets/icons/done.svg');}
 
 /* ---- STOPP ---- */
 
@@ -170,7 +173,7 @@ li:last-child {
   aspect-ratio: 1/1;
   top: .5rem;
   right: .5rem;
-  background-image: url('./../assets/add.svg');
+  background-image: url('./../assets/icons/add.svg');
   background-color: transparent;
   background-size: cover;
   text-indent: -9999px;
@@ -276,14 +279,14 @@ a.btn_support:hover{
 }
 
 .paypal{
-  background-image: url(./../assets/paypal.svg);
+  background-image: url(./../assets/icons/paypal.svg);
   width: 3rem;
   height: 3rem;
   display: block;
   }
 
   .whatsapp{
-    background-image: url(./../assets/whatsapp.svg);
+    background-image: url(./../assets/icons/whatsapp.svg);
     width: 1.8rem;
     height: 1.8rem;
     margin: .6rem 0;
@@ -292,7 +295,7 @@ a.btn_support:hover{
     }
 
   .happy{
-    background-image: url(./../assets/happy.svg);
+    background-image: url(./../assets/icons/happy.svg);
     background-size: contain;
     width: 1.75rem;
     height: 1.75rem;
@@ -406,3 +409,46 @@ hr{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+.drag-handle{
+  height: 1.5rem;
+  min-width: 1.5rem;
+  max-width: 1.5rem;
+  width: 1.5rem;
+  background: url('./../assets/icons/move.svg') no-repeat 50% 50%;
+  background-size: contain;
+  display: block;
+  cursor: move;
+  stroke:#666666;
+}
+
+.move-svg{
+  stroke: blue;
+}
+
+/* - TOAST -*/
+.toasts{
+  position: absolute;
+  top: 1rem;
+  right: -20rem;
+  max-width: 20rem;
+  transition: all .7s ease-in-out;
+}
+
+.toast-error {
+  padding: .65rem 1.15rem;
+  background-color: rgb(255, 184, 184);
+  color: rgb(113, 15, 15);
+  font-size: 90%;
+  border: 1px solid white;
+  outline: 1px solid rgb(113, 15, 15);
+  border-radius: .25rem;
+}
+
+/* Animation, wenn der Toast eingeblendet wird */
+.toast-show {
+  right: 1rem !important;
+  top: 1rem;
+  opacity: 1;
+} 
