@@ -13,15 +13,13 @@ class TaskHelpers {
 
         setTimeout(() => {
             toastsDiv.classList.add('toast-show');
-            setTimeout(() => toastsDiv.classList.remove('toast-show'), 2700);
+            setTimeout(() => {toastsDiv.classList.remove('toast-show')}, 2700);
         }, 10);
 
         toastsDiv.appendChild(errorDiv);
         document.body.appendChild(toastsDiv);
-        console.log("Hat theoretisch geklappt")
     }
     //---
-
     createHash(string, date = new Date) {
 
         const saltMin = 1000;
@@ -73,4 +71,11 @@ class TaskHelpers {
         const hashString = Array.from(hashArray, byte => byte.toString(16).padStart(2, '0')).join('');
         return hashString;
     }
+
+    feedback(type){
+        if(type === "vibrate" && window.navigator.vibrate){
+            window.navigator.vibrate(200);
+        }
+    }
+
 }

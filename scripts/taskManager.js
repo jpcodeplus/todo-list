@@ -11,8 +11,6 @@ class TaskManager {
     this.helpers = helpers;
   }
 
-
-
   validateInput(input) {
     let validated = true;
     let errorText = false;
@@ -20,6 +18,7 @@ class TaskManager {
     if (input.length <= 3) errorText = 'Eingabe zu kurz\n';
     if (errorText) validated = false;
     errorText && this.helpers.createToast(errorText,'error');
+    this.helpers.feedback('vibrate');
     return validated
   }
 
