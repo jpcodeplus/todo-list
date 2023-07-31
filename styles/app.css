@@ -106,16 +106,13 @@ input[type="text"] {
 
 button {
   display: block;
-  background-color: #4CAF50;
   color: #fff;
+  background-color: transparent;
   border: none;
   border-radius: .25rem;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #45a049;
-}
 
 
 
@@ -358,7 +355,7 @@ hr{
   border: 1px solid #000;
 }
 .sortable-over {
-  background: green !important;
+  /**/
 }
 
 /* Style for the chosen item during the drag */
@@ -430,9 +427,9 @@ hr{
 /* - TOAST -*/
 .toasts{
   position: absolute;
-  top: 1rem;
-  right: -20rem;
-  max-width: 20rem;
+  top: -10rem;
+  right: 1rem;
+  max-height: 10rem;
   transition: all .7s ease-in-out;
 }
 
