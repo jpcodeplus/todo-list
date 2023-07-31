@@ -22,7 +22,9 @@ class TaskManager {
   }
 
   addTask(taskText) {
-    if (taskText === "") return;
+    if (taskText === "") {
+      alert('Ungültige Eingabe!')
+      return;}
 
     const newTask = {
       text: taskText,
