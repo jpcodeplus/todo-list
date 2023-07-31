@@ -7,6 +7,6 @@ window.onload = function() {
     preloader.style.opacity = "0";
     setTimeout(function() {
       preloader.style.display = "none";
-    }, 1000);
-  }, 1000);
+    }, 600);
+  }, 600);
 }
