@@ -166,6 +166,7 @@ li:last-child {
 .add-new-task:hover {
   position: absolute;
   height: calc(100% - 1rem);
+  max-width: 1.75rem;
   aspect-ratio: 1/1;
   top: .5rem;
   right: .5rem;
